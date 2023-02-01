@@ -1,0 +1,78 @@
+h1,h4,p{
+    text-align: center;
+}
+
+body{
+    background-color: #FFCD24;
+}
+
+button{
+    margin-left: 30px;
+}
+
+.guestUserDetails{
+    margin-left: 30px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.RegisteredUser{
+    margin-left: 30px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.RegisterUserCreation{
+    margin-left: 30px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.content_for_Why_Us{
+    height: 50px;
+    text-align: left;
+    list-style: none;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.content_for_Why_Us:hover{
+   border: 2px solid blueviolet; 
+   background-color: mistyrose;
+}
+
+.content_for_Why_Us_title span{
+    padding: 1px;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: black;
+}
+
+.content_pointer_block{
+    text-align: center;
+}
+
+.range_of_Products_title{
+    text-align: center;
+}
+
+.product_sold{
+    text-align: center;
+    font-weight: bolder;
+    font-size: 100px;
+}
+
+.product_sold_content{
+    text-align: center;
+}
+
+.products_Number{
+    text-align: center;
+    font-size: x-large;  
+    font-weight: bold; 
+}
+
+input.ng-invalid.ng-touched{
+    border : 4px solid maroon
+}
+

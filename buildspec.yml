@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region {{AWS region}} | docker login --username AWS --password-stdin {{AWS Account id}}.dkr.ecr.{{AWS region}}.amazonaws.com
+      - echo Log in to ECR successfull
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t {{AWS Account Id}}.dkr.ecr.ap-south-1.amazonaws.com/app-nightfury:latest .
+      - docker tag {{AWS Account Id}}.dkr.ecr.ap-south-1.amazonaws.com/app-nightfury:latest {{AWS Account Id}}.dkr.ecr.ap-south-1.amazonaws.com/app-nightfury:latest
+      - echo Build completed on `date`
+      - docker push {{AWS Account Id}}.dkr.ecr.ap-south-1.amazonaws.com/app-nightfury:latest
+  post_build:
+    commands:
+      - echo docker image pushed successfully..

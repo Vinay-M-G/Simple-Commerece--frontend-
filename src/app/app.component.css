@@ -1,0 +1,37 @@
+li{
+   display: inline; 
+   padding: 125px; 
+   color: white;
+
+}
+
+body{
+    background-color: #1052AD;
+    text-align: center;
+    height: 50px;
+}
+
+.company-title{
+    color: black; 
+    border-radius: 10px;
+    height: auto; 
+    background-color:  #FFCD24;
+    width: auto;
+    margin-top: 5px;
+}
+
+.api-docs-box{
+    color: black;
+    border-radius: 10px;
+    height: auto; 
+    background-color:  #FFCD24;
+    width: 50%;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 800px) and (min-width:0px){
+
+    .api-docs-box{
+        display: none;
+    }
+}

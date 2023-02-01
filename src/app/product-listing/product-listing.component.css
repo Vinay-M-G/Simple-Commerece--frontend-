@@ -1,0 +1,23 @@
+/* .container, .container-fluid, .container-xl{
+    border: 1px solid red;
+} */
+
+.dropdown{
+    text-align: center;
+}
+
+.sales_text{
+    background-color: #FFCD24;
+    color: black;
+
+}
+
+.product_count{
+    background-color: #FFCD24;
+    color: black;
+}
+
+.products_list{
+    background-color: #FFCD24;
+}
+

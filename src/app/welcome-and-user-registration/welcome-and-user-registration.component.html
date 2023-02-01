@@ -1,0 +1,138 @@
+<body>
+    <div *ngIf=errorPresent class="container-fluid" style="background-color: silver;">
+        <p style="color: red;"><i><b>{{errorMessage}}</b></i></p>
+    </div>
+    <div class="container-xl">
+        <div class="row align-items-center">
+            <div class="col-6">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="btn btn-secondary" [disabled]="!welcomePageContent[0].isGuestEnabled"  (click)="guestUser()">&nbsp; &nbsp; Continue as Guest &nbsp; &nbsp;</button>
+                    <button class="btn btn-danger" [disabled]="!welcomePageContent[0].isLoginEnabled" (click)="loggedInUser()">&nbsp; &nbsp; Log In  &nbsp;  &nbsp;</button>
+                    <button class="btn btn-dark" [disabled]="!welcomePageContent[0].isCreateAccountEnabled" (click)="createUser()"> &nbsp; &nbsp; Sign Up &nbsp; &nbsp;</button>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="content_for_Why_Us_title">
+                    <h1><span>Why Us ?</span></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-xl">
+        <div class="row">
+            <div class="col">
+                <div *ngIf=isUserTypeGuest() class="guestUserDetails">
+                    <br>
+                    <form (ngSubmit)="sendRequestForGuest(guestUserDetails)" #guestUserDetails="ngForm">
+                        <div class="form-group">
+                            <label for="GuestUserName">Your Name *</label>
+                            <input type="text" id="GuestUserName" class="form-control" ngModel name="guestUserName"
+                                required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="GuestUserEmail">Email Id *</label>
+                            <input type="email" id="GuestUserEmail" class="form-control" ngModel name="guestUserEmail"
+                                required>
+                        </div>
+                        <br>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!guestUserDetails.valid">let's go</button>
+                    </form>
+                </div>
+                <div *ngIf=isUserTypeRegistered() class="RegisteredUser">
+                    <br>
+                    <form (ngSubmit)="sendRequestForRegistered(RegisteredUserDetails)" #RegisteredUserDetails="ngForm">
+                        <div class="form-group">
+                            <label for="GuestUserEmail">Email Id *</label>
+                            <input type="email" id="GuestUserEmail" class="form-control" ngModel name="registeredUserEmail"
+                                required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="GuestUserPassword">Password *</label>
+                            <input type="password" id="GuestUserPassword" class="form-control" ngModel
+                                name="registeredUserPassword" required>
+                        </div>
+                        <br>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!RegisteredUserDetails.valid">let's dive in</button>
+                    </form>
+                </div>
+                <div *ngIf=isUserTypeAccountCreation() class="RegisterUserCreation">
+                    <br>
+                    <form (ngSubmit)="sendRequestForRegisteredUserCreation(userRegistrationDetails)"
+                        #userRegistrationDetails="ngForm">
+                        <div class="form-group">
+                            <label for="GuestUserName">Your Lovely Name *</label>
+                            <input type="text" id="GuestUserName" class="form-control" ngModel name="registeredUserName"
+                                required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="GuestUserEmail">Email Id *</label>
+                            <input type="email" id="GuestUserEmail" class="form-control" ngModel name="registeredUserEmail"
+                                required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="GuestUserPassword">Password *</label>
+                            <input type="password" id="GuestUserPassword" class="form-control" ngModel
+                                name="registeredUserPassword" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="GuestUserPassword">Confirm Password *</label>
+                            <input type="password" id="GuestUserPasswordConfirmation" class="form-control" ngModel
+                                name="registeredUserPasswordConfirmation" required>
+                        </div>
+                        <br>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!userRegistrationDetails.valid">let's get registered</button>
+                    </form>
+                </div>
+            </div>
+           <div class="col">
+            <div>
+                <ul class="list-group">
+                    <li *ngFor = "let element of welcomePageContent[0].contentForWhyUS" class="list-group-item">
+                        <div class="row">
+                            <div class="col-2" style="display: inline; width: 50px; height: 50px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green" className="w-6 h-6">
+                                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+                                </svg>  
+                            </div>
+                            <div class="col-10" style="font-size: small;">
+                                <i><b>{{element.content}}</b></i>
+                            </div>
+                            <br>
+                        </div>                                                  
+                    </li>
+                </ul>
+            </div>
+           </div>
+        </div>
+    </div>
+    <div class="container-xl">
+        <div class="row align-items-left">
+            <div class="col-6">
+                <h1 class="product_sold">14</h1>
+                <h4 class="product_sold_content">products sold so far</h4>
+                <br>
+                <br>
+                <h1><i>REACH US AT</i></h1>
+                <h4>{{welcomePageContent[0].contactDetails.email}}</h4>
+                <h4>{{welcomePageContent[0].contactDetails.phoneNumber}}</h4>
+                <p>{{welcomePageContent[0].contactDetails.Address1}}</p>
+            </div>
+            <div class="col-6">
+                <h4 style="text-align: centre;"><u>Our Category of products</u></h4>
+                <div class="row">
+                    <div *ngFor = "let element of welcomePageContent[0].productCategoryAvailable" class="card border-dark mb-3" style="width: 17rem;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;" >{{element.categoryName}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted products_Number">{{element.productModelCount}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

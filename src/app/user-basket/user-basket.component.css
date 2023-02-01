@@ -1,0 +1,47 @@
+.container-fluid{
+    background-color: #FFCD24;
+   
+}
+
+.pricecomponent{
+    background-color: #0D6EFD;
+    color: white;
+}
+
+.serviceitems:hover{
+    background-color: mistyrose;
+    color: black;
+    cursor: pointer;
+    border: 2px solid  #0D6EFD; 
+}
+
+.ordersummary:hover{
+    border: 2px solid white
+}
+
+.pricecomponent:hover{
+    border: 2px solid white;   
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media screen and (max-width: 680px) and (min-width:0px){
+
+    .buttonMobView{
+        width: 100%;
+    }
+
+    .cardMobileView{
+        width: 22rem !important;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .priceMobView{
+        text-align: center;
+    }
+}
