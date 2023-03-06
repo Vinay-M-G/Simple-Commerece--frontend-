@@ -1,16 +1,9 @@
-<body>
+<body style="font-family: 'Labrada', serif;">
     <div class="container-fluid sales_text">
         <div class="row">
-            <div class="col-md-8 col-xs-6">
+            <div class="col-md-12 col-xs-12">
                 <h4 style="padding-left: 15px;"><i>sale is Live, choose products of your style....</i></h4>
             </div>
-            <div class="col-md-4 col-xs-6">
-                <div class="container-fluid">
-                    <button class="btn btn-dark btn-sm" style="align-items: center; margin-top: 5px; margin-bottom: 10px;"
-                        (click)="getProducts()">Search Products</button>
-                </div>
-            </div>
-
         </div>
     </div>
     <div class="container-fluid sales_text">
@@ -21,22 +14,21 @@
                         <div class="dropdown">
                             <button class="btn {{color}} dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Product Category
-                            </button>
+                                Product Category </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div *ngFor="let element of refined_attr.categories" class="dropdown-item">
-                                    <li class="container">
+                                    <li class="container" (click)="updateCategoryAttribute(element.key)">
                                         <div class="row">
                                             <div class="col-3 col-xs-2">
-                                                <svg *ngIf="element.value" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="green"
-                                                    class="w-5 h-5">
+                                                <svg *ngIf="element.value" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20" fill="green" class="w-5 h-5">
                                                     <path fill-rule="evenodd"
                                                         d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
                                                         clip-rule="evenodd" />
                                                 </svg>
                                             </div>
                                             <div class="col-9 col-xs-10" style="align-items: left;">
-                                                <button type="button" class="btn btn-light btn-sm btn-block" (click)="updateCategoryAttribute(element.key)"><b>{{element.key}}</b></button>
+                                                <p><b>{{element.key}}</b></p>
                                             </div>
                                         </div>
                                     </li>
@@ -63,18 +55,18 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div *ngFor="let element of refined_attr.filters" class="dropdown-item">
-                                    <li class="container">
+                                    <li class="container" (click)="updateFilterAttribute(element.key)">
                                         <div class="row">
-                                            <div class="col-3 col-xs-2">
-                                                <svg *ngIf="element.value" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="green"
-                                                    class="w-5 h-5">
+                                            <div class="col-4 col-xs-2">
+                                                <svg *ngIf="element.value" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20" fill="green" class="w-5 h-5">
                                                     <path fill-rule="evenodd"
                                                         d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
                                                         clip-rule="evenodd" />
                                                 </svg>
                                             </div>
-                                            <div class="col-9 col-xs-10" style="align-items: left;">
-                                                <button type="button" class="btn btn-light btn-sm btn-block" (click)="updateFilterAttribute(element.key)"><b>{{element.key}}</b></button>
+                                            <div class="col-8 col-xs-10" style="align-items: left;">
+                                                <p><b>{{element.key}}</b></p>
                                             </div>
                                         </div>
                                     </li>
@@ -102,18 +94,18 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div *ngFor="let element of refined_attr.sortTypes"
                                     class="custom-control custom-radio dropdown-item">
-                                    <li class="container">
+                                    <li class="container" (click)="updateSortAttribute(element.key)">
                                         <div class="row">
                                             <div class="col-4">
-                                                <svg *ngIf="element.value" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="green"
-                                                    class="w-5 h-5">
+                                                <svg *ngIf="element.value" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20" fill="green" class="w-5 h-5">
                                                     <path fill-rule="evenodd"
                                                         d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
                                                         clip-rule="evenodd" />
                                                 </svg>
                                             </div>
                                             <div class="col-8" style="align-items: left;">
-                                                <button type="button" class="btn btn-light btn-sm btn-block" (click)="updateSortAttribute(element.key)"><b>{{element.key}}</b></button>
+                                                <p><b>{{element.key}}</b></p>
                                             </div>
                                         </div>
                                     </li>
@@ -133,17 +125,15 @@
             <h4 style="text-align: center;">Products : {{products.length}}</h4>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row row-cols-xs-12 row-cols-md-4 g-4 products_list" style="padding-top: 15px;">
-            <div *ngFor="let element of products" class="col">
-                <div class="card border-dark product_card" style="width: 20rem;">
+    <div class="container-fluid" style="background-color: #FFCD24;">
+        <div class="card-deck" style="padding-top: 15px;">
+            <div *ngFor="let element of products" class="product_card"> 
+                <div class="card shadow-lg" style="border: 2px dotted black;">
                     <!--image url is turned off-->
-                    <img class="card-img-top" src="{{element.productUrl}}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{element.productName}}</h5>
-                        <p class="card-text" style="text-align: justify;"><b>{{element.productDescription}}</b></p>
+                    <div class="container product-image">
+                        <img src="{{element.productUrl}}" style="width: 100%; height: 100%;" alt="">
                     </div>
-                    <div class="container-fluid">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green"
@@ -154,55 +144,54 @@
                                 </svg>
                             </div>
                             <div class="col-10">
-                                <h6 style="font-weight: bold;">
-                                    <i>Product Code : {{element.productId}}</i>
-                                </h6>
+                                <p class="card-title"><b>{{element.productName}}</b></p>
                             </div>
                         </div>
-                        <div class="row" style="align-items: left;">
-                            <div class="col-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="green"
-                                    class="w-6 h-6">
-                                    <path fill-rule="evenodd"
-                                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-                                        clip-rule="evenodd" />
-                                </svg>
+                        <p style="font-size: smaller; text-align: right;">{{element.productModelId}}</p>
+                        <p style="text-align: justify; margin: 0px;">{{element.productDescription}}</p>
+                        <div class="container" style="padding-top: 10px;">
+                            <div *ngIf="isOfferPricePresent(element.priceValues.offerPrice, element.priceValues.basePrice);then offerPrice else basePrice">
                             </div>
-                            <div class="col-10">
-                                <h6 style="font-weight: bold;">
-                                    <i>Product Model Code : {{element.productModelId}}</i>
-                                </h6>
-                            </div>
+                            <ng-template #offerPrice>
+                                <div class="container bg-danger price-box-container">
+                                    <p style="font-size: large; padding-top: 1px;">For you : INR {{element.priceValues.offerPrice}}</p>
+                                    <p style="margin-top: -15px; font-size: small;">Our Price : INR {{element.priceValues.basePrice}}</p>
+                                </div>
+                            </ng-template>
+                            <ng-template #basePrice>
+                                <div class="container bg-danger price-box-container" style="border-bottom-left-radius: 10px; font-size: large;">
+                                    <p>Our Price : INR {{element.priceValues.basePrice}}</p>
+                                </div>
+                            </ng-template>
+                            <br>
                         </div>
-                    </div>
-                    <div class="container-fluid">
-                        <h6 *ngIf="!isPriceValid(element.priceValues.basePrice)"
-                            style="text-align: center; font-weight: bold;">
-                            <i>Our Price : INR {{element.priceValues.basePrice}}</i>
-                        </h6>
-                        <h5 *ngIf="!isPriceValid(element.priceValues.offerPrice)"
-                            style="text-align: center; font-weight: bold;">
-                            <i>For you : INR {{element.priceValues.offerPrice}}</i>
-                        </h5>
-                        <br>
-                        <div class="container-fluid">
+                        <div class="container">
                             <div class="row">
                                 <div class="col-12">
-                                   <h6 class={{getStockIndicator(element.stockData.stockStatus)}}><b>{{getStockText(element.stockData.stockStatus, element.stockData.quantity)}}</b></h6>
+                                    <h6 class={{getStockIndicator(element.stockData.stockStatus)}}>
+                                        <b>{{getStockText(element.stockData.stockStatus,
+                                            element.stockData.quantity)}}</b>
+                                    </h6>
                                 </div>
                             </div>
                             <div class="row">
-                                <div *ngIf="element.availabiltyOptions.isSellableOnline;then addProductTemplate else NonSellableTemplate">
+                                <div
+                                    *ngIf="element.availabiltyOptions.isSellableOnline;then addProductTemplate else NonSellableTemplate">
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <ng-template #addProductTemplate>
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn btn-dark" (click)="addProductToBasket(element.productId, false)">Add to Cart</button>
-                                            <button type="button" class="btn btn-warning" (click)="addProductToBasket(element.productId, true)">Buy Now</button>
+                                            <button type="button" class="btn btn-dark"
+                                                (click)="addProductToBasket(element.productId, false)">Add to
+                                                Cart</button>
+                                            <button type="button" class="btn btn-warning"
+                                                (click)="addProductToBasket(element.productId, true)">Buy
+                                                Now</button>
                                         </div>
                                     </ng-template>
                                     <ng-template #NonSellableTemplate>
-                                        <div *ngIf="element.availabiltyOptions.availableForSale;then notifyMeTemplate else ContactSales">
+                                        <div
+                                            *ngIf="element.availabiltyOptions.availableForSale;then notifyMeTemplate else ContactSales">
                                         </div>
                                         <ng-template #notifyMeTemplate>
                                             <div class="btn-group" role="group" aria-label="Basic example">
@@ -214,11 +203,12 @@
                                                 <button type="button" class="btn btn-dark">Contact Sales</button>
                                             </div>
                                         </ng-template>
-                                    </ng-template>       
+                                    </ng-template>
                                 </div>
                             </div>
                         </div>
                         <br>
+
                     </div>
                 </div>
             </div>
@@ -230,7 +220,9 @@
 
             </div>
             <div class="col-md-3 col-xs-12">
-                <button class="btn btn-success btn-lg checkoutMobButtonView" style="background-color: #1FDF64; color: black;" (click)="navigateToBasket()">Proceed to Checkout</button>
+                <button class="btn btn-success btn-lg checkoutMobButtonView"
+                    style="background-color: #1FDF64; color: black;" (click)="navigateToBasket()">Proceed to
+                    Checkout</button>
             </div>
         </div>
     </div>
@@ -238,4 +230,4 @@
     <!-- <div>
         {{refined_attr | json}}
     </div> -->
-</body> 
+</body>

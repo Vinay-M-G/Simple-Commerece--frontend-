@@ -1,5 +1,3 @@
-//const domain = "http://localhost:9001"
-const domain = "http://ec2-43-204-215-240.ap-south-1.compute.amazonaws.com:9001"
 
 export class AddressModel{
     "addressValues": [
@@ -85,10 +83,10 @@ export class BasketDetails {
 
 export class AddressPageEndPoints{
     getRecommendedAddressDetails(businessType : string | undefined){
-        return domain + "/api/v1/user/getaddresslist?busnisessType=" + businessType
+        return "/api/v1/user/getaddresslist?busnisessType=" + businessType
     }
     
-    updateAddressDetails = domain + "/api/v1/user/updateaddress"
-    getBasketDetails = domain + "/api/v1/carts/loadbasket"
+    updateAddressDetails = "/api/v1/user/updateaddress"
+    getBasketDetails = "/api/v1/carts/loadbasket"
     getCountryList = "https://restcountries.com/v2/all"
 }

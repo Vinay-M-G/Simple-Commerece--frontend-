@@ -3,8 +3,7 @@ import { listingAttr, refinedListingAttr, baseProductModel, EndPointCollectionsP
 import { HttpClient , HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieHandler, CookieVariables } from '../app.CookieHandler';
-
-
+import { DomainHandler } from '../app.DomainHandler';
 
 @Component({
   selector: 'app-product-listing',
@@ -27,9 +26,12 @@ export class ProductListingComponent implements OnInit {
   cookieVariables = new CookieVariables();
   productAdditionResponse = new ProductAdditionResponse();
   stockMessages = new StockMessages();
+  backendHostUrl : string = "";
 
   ngOnInit(): void {
-    this.http.get(this.endPointsProductListing.productKeyConfigurationsEndPoint).subscribe(
+    this.backendHostUrl = new DomainHandler().getDomain();
+
+    this.http.get(this.backendHostUrl + this.endPointsProductListing.productKeyConfigurationsEndPoint).subscribe(
       responseBody =>{
         console.log(responseBody)
         this.refined_attr = JSON.parse(JSON.stringify(responseBody))
@@ -69,7 +71,7 @@ export class ProductListingComponent implements OnInit {
   }
 
   getProducts(){
-    this.http.get(this.endPointsProductListing.customProductListEndoint + this.customProductListRequestParamBuilder()).subscribe(
+    this.http.get(this.backendHostUrl + this.endPointsProductListing.customProductListEndoint + this.customProductListRequestParamBuilder()).subscribe(
       responseBody =>{
         this.products = JSON.parse(JSON.stringify(responseBody))
         console.log(this.products)
@@ -84,6 +86,15 @@ export class ProductListingComponent implements OnInit {
        return false 
     }else{
       return true
+    }
+  }
+
+  isOfferPricePresent(offerPrice : number, basePrice : number){
+
+    if(offerPrice != null && (basePrice - offerPrice) > 0){
+      return true
+    }else{
+      return false
     }
   }
 
@@ -117,6 +128,8 @@ export class ProductListingComponent implements OnInit {
         count++
       }
     }
+
+    this.getProducts()
     
   }
 
@@ -136,6 +149,8 @@ export class ProductListingComponent implements OnInit {
         count++
       }
     }
+
+    this.getProducts()
   }
 
   updateSortAttribute(attribute : string){
@@ -151,6 +166,8 @@ export class ProductListingComponent implements OnInit {
       }
     }
 
+    this.getProducts()
+
   }
 
   addProductToBasket(productId : string, navigateToBasket : boolean){
@@ -158,7 +175,7 @@ export class ProductListingComponent implements OnInit {
     console.log(guidCookie)
     const headers = new HttpHeaders().append('guid', guidCookie).set('content-type', 'application/json');
     
-    this.http.post(this.endPointsProductListing.addProductToBasket + productId , null,  {'headers' : headers}).subscribe(
+    this.http.post(this.backendHostUrl + this.endPointsProductListing.addProductToBasket + productId , null,  {'headers' : headers}).subscribe(
       response => {
         console.log(response)
         this.productAdditionResponse = JSON.parse(JSON.stringify(response))

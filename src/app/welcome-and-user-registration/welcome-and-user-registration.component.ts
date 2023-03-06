@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient , HttpErrorResponse} from '@angular/common/http';
 import { WelcomePageModel, guestUserAction, EndPointCollections, CreateAccountAction, RegisteredUserAction, ErrorMessages, AuthenticationResponseBody } from "./welcome-and-user-registration.model";
 import { CookieHandler, CookieVariables } from '../app.CookieHandler';
+import { DomainHandler } from '../app.DomainHandler';
 
 @Component({
   selector: 'app-welcome-and-user-registration',
@@ -27,18 +28,38 @@ export class WelcomeAndUserRegistrationComponent implements OnInit {
   authenticationResponseBody = new AuthenticationResponseBody()
   cookieVariables = new CookieVariables()
   cookieHandler = new CookieHandler()
+  premiumProductIndex : number = 0
+  premiumProductsCount : number = 0
+
+  backendHostUrl : string = ""
+  availableUserType : string[] = ["GUEST", "REGISTERED", "REQUESTTOCREATEACCOUNT"] 
 
   ngOnInit(): void {
-    this.cookieHandler.deleteAllCookies()
+
+    this.backendHostUrl = new DomainHandler().getDomain();
+    this.cookieHandler.deleteAllCookies();
     
-    this.http.get(this.endPoints.welcomePageRequestUrl).subscribe(
+    this.http.get(this.backendHostUrl + this.endPoints.welcomePageRequestUrl).subscribe(
       responseBody =>{
         this.welcomePageContent[0] = JSON.parse(JSON.stringify(responseBody))
+        this.premiumProductsCount = this.welcomePageContent[0].premiumProducts.length;
       }  
     );
+
   }
 
-  availableUserType : string[] = ["GUEST", "REGISTERED", "REQUESTTOCREATEACCOUNT"] 
+  timmerDummyConstant = setInterval(() => {
+
+    if(this.premiumProductIndex < this.premiumProductsCount){
+      this.premiumProductIndex++;
+      
+    }else{
+      this.premiumProductIndex = 0;
+      
+    }
+  }, 5000);
+
+  
   userType : string = this.availableUserType[0]
 
 
@@ -89,6 +110,15 @@ export class WelcomeAndUserRegistrationComponent implements OnInit {
     }
   }
 
+  isOfferPricePresent(offerPrice : number, basePrice : number){
+
+    if(offerPrice != null && (basePrice - offerPrice) > 0){
+      return true
+    }else{
+      return false
+    }
+  }
+
   isValidEmail(emailId : string){
     var mailformat =  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return mailformat.test(emailId)
@@ -123,7 +153,7 @@ export class WelcomeAndUserRegistrationComponent implements OnInit {
     const headers = { 'content-type': 'application/json'}
 
     //Post Call to Server to create guest user
-    this.http.post( this.endPoints.guestUserActionEndPoint, jsonBody, {'headers': headers}).subscribe(
+    this.http.post( this.backendHostUrl + this.endPoints.guestUserActionEndPoint, jsonBody, {'headers': headers}).subscribe(
       response =>{  
         console.log(response)
 
@@ -177,7 +207,7 @@ export class WelcomeAndUserRegistrationComponent implements OnInit {
     const headers = { 'content-type': 'application/json'}
 
     //Post Call to Server to create guest user
-    this.http.post( this.endPoints.loginUserEndPoint, jsonBody, {'headers': headers}).subscribe(
+    this.http.post( this.backendHostUrl + this.endPoints.loginUserEndPoint, jsonBody, {'headers': headers}).subscribe(
       response =>{  
         console.log(response)
 
@@ -246,7 +276,7 @@ export class WelcomeAndUserRegistrationComponent implements OnInit {
       const headers = { 'content-type': 'application/json'}
 
       //Post Call to Server to create Registered user
-      this.http.post( this.endPoints.createRegisteredUserEndPoint, jsonBody, {'headers': headers}).subscribe(
+      this.http.post(this.backendHostUrl + this.endPoints.createRegisteredUserEndPoint, jsonBody, {'headers': headers}).subscribe(
         response =>{  
           console.log(response)
         },(error : HttpErrorResponse) => {
@@ -263,5 +293,7 @@ export class WelcomeAndUserRegistrationComponent implements OnInit {
       )
     
   }
+
+ 
 
 }

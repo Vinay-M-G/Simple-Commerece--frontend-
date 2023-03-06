@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BasketDetails, BasketPageEndPoints } from './user-basket.model';
 import { CookieHandler, CookieVariables } from '../app.CookieHandler';
+import { DomainHandler } from '../app.DomainHandler';
 
 @Component({
   selector: 'app-user-basket',
@@ -18,12 +19,14 @@ export class UserBasketComponent implements OnInit {
   cookieVariables = new CookieVariables();
   basketPageEndPoints = new BasketPageEndPoints();
   productMaxCount = 99
+  backendHostUrl : string = "";
 
   ngOnInit(): void {
+    this.backendHostUrl = new DomainHandler().getDomain();
 
     const headers = new HttpHeaders().append("guid" , this.cookieHandler.extractCookie(this.cookieVariables.tempGuid))
     console.log(headers)
-    this.http.get(this.basketPageEndPoints.getBasketDetails , {'headers' : headers}).subscribe(
+    this.http.get(this.backendHostUrl + this.basketPageEndPoints.getBasketDetails , {'headers' : headers}).subscribe(
       responseBody => {
         console.log(responseBody)
         this.basketDetails = JSON.parse(JSON.stringify(responseBody))
@@ -33,7 +36,7 @@ export class UserBasketComponent implements OnInit {
 
   updateService(serviceCode : string, serviceStatus : boolean, productCode : string){
     
-    const url = this.basketPageEndPoints.basketProductServiceUpdate(productCode, serviceCode, !serviceStatus);
+    const url = this.backendHostUrl + this.basketPageEndPoints.basketProductServiceUpdate(productCode, serviceCode, !serviceStatus);
     const headers = new HttpHeaders().append("guid" , this.cookieHandler.extractCookie(this.cookieVariables.tempGuid))
     this.http.patch(url, null, {'headers' : headers}).subscribe(
       responseBody => {
@@ -50,7 +53,7 @@ export class UserBasketComponent implements OnInit {
       for(var i = 0; i < this.basketDetails.products.length; i++){
         if(this.basketDetails.products[i].productId == productCode){
           alert("Invalid Quantity")
-          this.basketDetails.products[i].quantity = quantity
+          window.location.reload()
           break
         }
 
@@ -59,7 +62,7 @@ export class UserBasketComponent implements OnInit {
       return
     }
 
-    const url = this.basketPageEndPoints.basketProductUpdate(productCode, quantity)
+    const url = this.backendHostUrl + this.basketPageEndPoints.basketProductUpdate(productCode, quantity)
     const headers = new HttpHeaders().append("guid" , this.cookieHandler.extractCookie(this.cookieVariables.tempGuid))
     this.http.patch(url , null, {'headers' : headers}).subscribe(
       responseBody => {

@@ -1,37 +1,51 @@
-h1,h4,p{
-    text-align: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=Labrada&display=swap');
 
 body{
     background-color: #FFCD24;
-}
-
-button{
-    margin-left: 30px;
+    font-family: 'Labrada', serif;
 }
 
 .guestUserDetails{
-    margin-left: 30px;
     font-weight: bold;
-    font-family: sans-serif;
+    font-family: 'Labrada', serif;
 }
 
 .RegisteredUser{
-    margin-left: 30px;
     font-weight: bold;
-    font-family: sans-serif;
+    font-family: 'Labrada', serif;
 }
 
 .RegisterUserCreation{
-    margin-left: 30px;
     font-weight: bold;
-    font-family: sans-serif;
+    font-family: 'Labrada', serif;
+}
+
+.welcome-container{
+    max-height: 400px; 
+    background-color: white;
+    border-radius: 5px;
+}
+
+.welcome-container-element-text{
+    height : auto; 
+    width: auto;
+    background-color: #1052AD;
+    display: inline-flex;
+    border-radius: 5px;
+}
+
+.scroll{
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+.scroll::-webkit-scrollbar{
+    width: 8px;
 }
 
 .content_for_Why_Us{
     height: 50px;
-    text-align: left;
-    list-style: none;
+    text-align: center;
     border-radius: 15px;
     background-color: white;
 }
@@ -43,8 +57,7 @@ button{
 
 .content_for_Why_Us_title span{
     padding: 1px;
-    text-align: center;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: 'Labrada', serif;
     color: black;
 }
 
@@ -66,13 +79,96 @@ button{
     text-align: center;
 }
 
+.product-range-card{
+    width: 30%; 
+    display: inline-flex;
+    margin-right: 10px; 
+    margin-bottom: 10px; 
+    font-size: small;
+}
+
+.product-range-card:hover{
+    width: 30%; 
+    display: inline-flex;
+    margin-right: 10px; 
+    margin-bottom: 10px; 
+    font-size: small;
+    transform: scale(1.1);
+}
+
 .products_Number{
     text-align: center;
     font-size: x-large;  
-    font-weight: bold; 
+    font-weight: bolder; 
+}
+
+.premimum-product{
+    height: 400px; 
+    background-color: white; 
+    margin-top: 15px; 
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.premimum-product-image{
+    width: auto; 
+    height: 360px; 
+    margin-top: 15px; 
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.premimum-product-content{
+    width: auto; 
+    height: 360px; 
+    margin-top: 15px; 
+    margin-bottom: 15px;
+    border-radius: 10px;
 }
 
 input.ng-invalid.ng-touched{
     border : 4px solid maroon
+}
+
+.premium-product-price-box{
+    height: auto; 
+    max-width: 90%;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border: 2px solid black;
+    font-weight: bold;
+}
+
+.premium-product-price-box:hover{
+    height: auto; 
+    max-width: 90%;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border: 2px solid black;
+    transform: scale(1.1);
+}
+
+
+@media screen and (max-width: 480px) and (min-width:0px){
+    .premimum-product{
+        height: 780px; 
+        background-color: white; 
+        margin-top: 15px; 
+        border: 1px solid black;
+        border-radius: 10px;
+        overflow-y: scroll;
+    }
+
+    .product-range-card{
+        width: 45%; 
+        display: inline-flex;
+        margin-right: 10px; 
+        margin-bottom: 10px; 
+        font-size: small;
+    }
 }
 

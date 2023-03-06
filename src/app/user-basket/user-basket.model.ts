@@ -1,7 +1,4 @@
 
-const domain = "http://ec2-43-204-215-240.ap-south-1.compute.amazonaws.com:9001"
-//const domain = "http://localhost:9001"
-
 export class BasketDetails {
     "basketCostSummary": {
         "serviceSubTotalWithOutDiscount": number,
@@ -45,14 +42,14 @@ export class BasketDetails {
 }
 
 export class BasketPageEndPoints {
-    getBasketDetails = domain + "/api/v1/carts/loadbasket"
+    getBasketDetails = "/api/v1/carts/loadbasket"
 
     basketProductUpdate = (productCode: string, quantity: number) => {
-        return domain + "/api/v1/carts/basketproductupdate?productcode=" + productCode + "&quantity=" + quantity;
+        return "/api/v1/carts/basketproductupdate?productcode=" + productCode + "&quantity=" + quantity;
     }
 
     basketProductServiceUpdate = (productCode: string, serviceCode: string, isSelected: boolean) => {
-        return domain + "/api/v1/carts/basketserviceupdate?productcode=" + productCode + "&servicecode=" + serviceCode + "&isSelected=" + isSelected;
+        return "/api/v1/carts/basketserviceupdate?productcode=" + productCode + "&servicecode=" + serviceCode + "&isSelected=" + isSelected;
     }
 
 

@@ -1,10 +1,10 @@
-<div class="container-fluid">
+<div class="container-fluid" style="font-family: 'Labrada', serif;">
     <div class="row">
         <h1 style="text-align: center; padding-top: 10px;"> Your Cart</h1>
     </div>
     <br>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" style="font-family: 'Labrada', serif;">
     <div class="row">
         <div class="col-md-8 col-sm-12 col-xs-12">
             <div *ngFor="let element of basketDetails.products" class="row" style="margin-bottom: 15px;">
@@ -33,10 +33,10 @@
                                             <div *ngIf="isOfferPricePresent(element.priceValues.offerPrice, element.priceValues.basePrice);then withOfferPrice else onlyBasePrice">
                                             </div>
                                             <ng-template #withOfferPrice>
-                                                <h6> <s> &#x20b9; {{element.priceValues.basePrice}} &nbsp;</s> &nbsp;&nbsp;<span>    &#x20b9; {{element.priceValues.offerPrice}}   </span></h6>
+                                                <p> <s> &#x20b9; {{element.priceValues.basePrice}} &nbsp;</s> &nbsp;<span>    &#x20b9; {{element.priceValues.offerPrice}}   </span></p>
                                             </ng-template>
                                             <ng-template #onlyBasePrice>
-                                                <h6> &#x20b9; {{element.priceValues.basePrice}} &nbsp;</h6>
+                                                <p> &#x20b9; {{element.priceValues.basePrice}} &nbsp;</p>
                                             </ng-template>  
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6">
@@ -49,7 +49,7 @@
                                                 <div class="col-md-4 col-sm-4 col-xs-12">
                                                     <div class="container">
                                                         <div class="form-group">
-                                                            <input type="number" min="1" max="99" value="{{element.quantity}}" class=" form-control" 
+                                                            <input type="number" min="1" max="99" [value]="element.quantity" class="form-control" 
                                                             style="font-weight: bold; text-align: center;" (change)="updateProductQuantity(element.productId, productQuantity.value)"
                                                              #productQuantity> 
                                                         </div> 
@@ -211,7 +211,7 @@
     <br>
 </div>
 
-<div class="container-fluid" style="background-color: #1052AD; border-top: #1FDF64 5px solid;">
+<div class="container-fluid" style="background-color: #1052AD; border-top: #1FDF64 5px solid; font-family: 'Labrada', serif;">
     <div class="row" style="padding-top: 10px; padding-bottom: 10px;">
         <div class="col-4">
             <button class="btn btn-success btn-lg" style="background-color: #1FDF64; color: black;" (click)="navigateToListingPage()">Let's choose some more</button>

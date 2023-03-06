@@ -2,8 +2,14 @@
     border: 1px solid red;
 } */
 
+@import url('https://fonts.googleapis.com/css2?family=Labrada&display=swap');
+
 .dropdown{
     text-align: center;
+}
+
+.body{
+    font-family: 'Labrada', serif;
 }
 
 .sales_text{
@@ -21,3 +27,66 @@
     background-color: #FFCD24;
 }
 
+.product_card{
+    display: inline-flex;
+    width: 24%;
+    background-color: #FFCD24;
+    padding-left: 15px;
+    border-radius: 10px;
+    padding-bottom: 15px;
+    
+}
+
+.price-box-container{
+    font-size: medium;
+    font-weight: bold;
+    border-top-left-radius: 60%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border: 2px solid black;
+    color: white;
+    text-align: right;
+    transform: scale(1.15);
+}
+
+.product-image{
+    width: auto;
+    height: 150px;
+}
+
+@media screen and (max-width: 434px) and (min-width:0px){
+    .product_card{
+        display: inline-flex;
+        width: 100%;
+        background-color: #FFCD24;
+        padding-left: 15px;
+        border-radius: 10px;
+        padding-bottom: 15px;
+        
+    }
+}
+
+@media screen and (max-width: 850px) and (min-width:434px){
+    .product_card{
+        display: inline-flex;
+        width: 50%;
+        background-color: #FFCD24;
+        padding-left: 15px;
+        border-radius: 10px;
+        padding-bottom: 15px;
+        
+    }
+}
+
+@media screen and (max-width: 1127px) and (min-width:850px){
+    .product_card{
+        display: inline-flex;
+        width: 33%;
+        background-color: #FFCD24;
+        padding-left: 15px;
+        border-radius: 10px;
+        padding-bottom: 15px;
+        
+    }
+}

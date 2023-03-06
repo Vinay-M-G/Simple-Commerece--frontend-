@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AddressModel, AddressPageEndPoints, BasketDetails, UpdateAddress } from './addresspage.model'
 import { CookieHandler, CookieVariables } from '../app.CookieHandler';
+import { DomainHandler } from '../app.DomainHandler';
 
 @Component({
   selector: 'app-addresspage',
@@ -33,20 +34,23 @@ export class AddresspageComponent implements OnInit {
   cookieVariables = new CookieVariables(); 
   emailId : String = ""
 
-  shippingAdressCountryCodePopulator : string = ""
-  billingAdressCountryCodePopulator : string = ""
+  shippingAdressCountryCodePopulator : string = "India, +91"
+  billingAdressCountryCodePopulator : string = "India, +91"
 
   isShippingNotificationReceived : boolean = false
   isBillingNotificationReceived : boolean = false
   addressNotificationMessage : string = ""
   addressNotificationBackground : string = ""
+  backendHostUrl : string = ""
 
   ngOnInit(): void {
+    this.backendHostUrl = new DomainHandler().getDomain();
+    
     this.getRecommendedAddress();
 
     const headers = new HttpHeaders().append("guid" , this.cookieHandler.extractCookie(this.cookieVariables.tempGuid));
 
-    this.http.get(this.addressPageEndPoints.getBasketDetails , {'headers' : headers}).subscribe(
+    this.http.get(this.backendHostUrl + this.addressPageEndPoints.getBasketDetails , {'headers' : headers}).subscribe(
       responseBody => {
         this.basketDetails = JSON.parse(JSON.stringify(responseBody))
       }
@@ -83,10 +87,9 @@ export class AddresspageComponent implements OnInit {
     shippingAddressRequestBody.isBillingAddress = false;
     shippingAddressRequestBody.isBusinessOrder = this.isBusnisessUser;
 
-    console.log(JSON.parse(JSON.stringify(shippingAddressRequestBody)))
     const headers = new HttpHeaders().append("guid" , this.cookieHandler.extractCookie(this.cookieVariables.tempGuid)).append("content-type", "application/json");
     
-    this.http.post(this.addressPageEndPoints.updateAddressDetails , 
+    this.http.post(this.backendHostUrl + this.addressPageEndPoints.updateAddressDetails , 
       JSON.parse(JSON.stringify(shippingAddressRequestBody)) , {'headers' : headers}).subscribe(
         responseBody => {
           console.log(responseBody)
@@ -95,7 +98,7 @@ export class AddresspageComponent implements OnInit {
 
             shippingAddressRequestBody.isBillingAddress = true;
       
-            this.http.post(this.addressPageEndPoints.updateAddressDetails , 
+            this.http.post(this.backendHostUrl + this.addressPageEndPoints.updateAddressDetails , 
               JSON.parse(JSON.stringify(shippingAddressRequestBody)) , {'headers' : headers}).subscribe(
                 responseBody => {
                   console.log(responseBody)
@@ -107,7 +110,7 @@ export class AddresspageComponent implements OnInit {
                   setTimeout(() => {
                     this.isShippingNotificationReceived = false
                   }, 3000)
-                  
+            
                 },(error : HttpErrorResponse) => {
                   console.log(error)
                   
@@ -165,17 +168,15 @@ export class AddresspageComponent implements OnInit {
     billingAddressRequestBody.isBillingAddress = true;
     billingAddressRequestBody.isBusinessOrder = this.isBusnisessUser;
 
-    console.log(JSON.parse(JSON.stringify(billingAddressRequestBody)))
     const headers = new HttpHeaders().append("guid" , this.cookieHandler.extractCookie(this.cookieVariables.tempGuid)).append("content-type", "application/json");
     
-    this.http.post(this.addressPageEndPoints.updateAddressDetails , 
+    this.http.post(this.backendHostUrl + this.addressPageEndPoints.updateAddressDetails , 
       JSON.parse(JSON.stringify(billingAddressRequestBody)) , {'headers' : headers}).subscribe(
         responseBody => {
           console.log(responseBody)
-
-          this.isBillingNotificationReceived = true
           this.addressNotificationMessage = "Billing Address updated successfully"
           this.addressNotificationBackground = "bg-success"
+          this.isBillingNotificationReceived = true
 
           setTimeout(() => {
             this.isBillingNotificationReceived = false
@@ -185,10 +186,9 @@ export class AddresspageComponent implements OnInit {
           console.log(error)
 
           if(error.status == 409 || error.status == 404){
-            this.isBillingNotificationReceived = true
             this.addressNotificationMessage = "Billing Address not updated successfully"
             this.addressNotificationBackground = "bg-danger"
-
+            this.isBillingNotificationReceived = true
             setTimeout(() => {
               this.isBillingNotificationReceived = false
             }, 3000)
@@ -208,7 +208,7 @@ export class AddresspageComponent implements OnInit {
   }
 
   getRecommendedAddress(){
-    var endPoint = this.addressPageEndPoints.getRecommendedAddressDetails(this.getBusnisessValue())
+    var endPoint = this.backendHostUrl + this.addressPageEndPoints.getRecommendedAddressDetails(this.getBusnisessValue())
     const headers = new HttpHeaders().append("guid" , this.cookieHandler.extractCookie(this.cookieVariables.tempGuid))
 
     if(this.getBusnisessValue() == 'B2B'){
@@ -278,6 +278,10 @@ export class AddresspageComponent implements OnInit {
 
   navigateToBasketPage(){
     this.route.navigate(['/basket'])
+  }
+
+  navigateToDelieryAndPayment(){
+    this.route.navigate(['/finalsteps'])
   }
 
   updateCountryCodeDisplayBox(country: string, countryCode : string, isShipping : boolean){

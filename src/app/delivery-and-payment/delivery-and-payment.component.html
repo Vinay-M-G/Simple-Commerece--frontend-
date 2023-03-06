@@ -1,0 +1,184 @@
+<div class="delAndPayMainComponent" style="font-family: 'Labrada', serif;">
+    <div class="container-fluid">
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-md-8 col-xs-12">
+                <h4 class="delivery-option-text">Available Delivery Options based on the selection of products</h4>
+                <div class="card-deck">
+                    <div *ngFor="let deliveryServiceElement of basketDetails.basketDeliveryServices" class="card {{getStyleValueForDeliveryService(deliveryServiceElement.isServiceSelected)}} 
+                    shadow-lg" (click)="updateDeliveryService(deliveryServiceElement.serviceId)">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8 col-xs-8">
+                                    <h6 class="card-title"><b>{{deliveryServiceElement.serviceName}}</b></h6>
+                                    <p class="card-text" style="text-align: justify;">{{deliveryServiceElement.serviceDescription}}</p>
+                                </div>
+                                <div class="col-md-4 col-xs-4">
+                                    <div *ngIf="isOfferPricePresent(deliveryServiceElement.priceValues.offerPrice, deliveryServiceElement.priceValues.basePrice);then 
+                                    withDeliveryOfferPrice else onlyDeliveryBasePrice" >
+                                    </div>
+                                    <ng-template #withDeliveryOfferPrice>
+                                        <div class="container delivery-price-element bg-success" style="border: 1px solid black">
+                                            <p style="text-align: right; padding-top: 10px;">&#x20b9; {{deliveryServiceElement.priceValues.offerPrice}}</p>
+                                            <p style="text-align: right;"><s>&#x20b9; {{deliveryServiceElement.priceValues.basePrice}}</s></p>
+                                        </div> 
+                                    </ng-template>
+                                    <ng-template #onlyDeliveryBasePrice>
+                                        <div class="container delivery-price-element bg-success" style="border: 1px solid black">
+                                            <p style="text-align: right; padding-top: 10px;">&#x20b9; {{deliveryServiceElement.priceValues.basePrice}}</p>
+                                        </div>   
+                                    </ng-template>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="shipping-address-block">
+                    <h4>Your Order will be Shipped to Address</h4>
+                    <div *ngFor="let element of addressModel.addressValues" >
+                        <div *ngIf="isShippingAddress(element.addressType)" class="container">
+                            <p><b>{{element.emailId}}, ({{element.countryCode}}) {{element.phoneNumber}} {{element.companyName}}</b></p>
+                            <p style="margin-top: -15px;"><b>{{element.line1}} {{element.line2}}, {{element.city}}, {{element.state}}, {{element.pincode}},
+                                {{element.country}}</b> </p>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="/#/address" style="color: black; padding-left: 10px;">Click here to change shipping address</a>
+                    </div>
+                </div>
+                <h4 style="padding-top: 20px;">Payment Options</h4>
+                <p>* Currently we are supporting only Cash On Delivery Options.</p>
+                <br>
+                <button type="button" class="btn btn-dark btn-lg btn-block align-payment-button" (click)="placeOrder(basketDetails.basketCostSummary.orderTotalWithDiscount)">&nbsp; &nbsp;
+                     Place My Order &nbsp; &nbsp;</button>
+                <br>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <div class="container">
+                    <h6 style="text-align: center;">Cart items</h6>
+                </div>
+                <div *ngFor="let element of basketDetails.products" class="container item-container">
+                    <div class="row">
+                        <div class="image-box shadow-lg">
+                            <img src="{{element.productUrl}}" style="width: 100%; height: 100%; " alt="product image" srcset="">
+                        </div>
+                        <div class="product-box shadow-lg">
+                            <p><b>{{element.productName}}</b></p>
+                            <p>Quantity : {{element.quantity}}</p>
+                        </div>
+                        <div class="price-box shadow-lg">
+                            <div *ngIf="isOfferPricePresent(element.priceValues.offerPrice, element.priceValues.basePrice);then withOfferPrice else onlyBasePrice" >
+                            </div>
+                            <p style="text-align: right; font-size: small; border-bottom: 1px solid black;" > 
+                                <span class="bg-danger" style="border-radius: 3px; color: white;"> 
+                                X {{element.quantity}}</span> 
+                            </p>
+                            <p style="text-align: right; font-size: small;"><b>&#x20b9; {{element.priceValues.lineTotal}}</b></p>
+                        </div>
+                            <ng-template  #withOfferPrice>
+                                <p style="font-size: small; border-radius: 5px; color: white;" class="bg-secondary">&#x20b9; {{element.priceValues.offerPrice}}
+                                   &nbsp; <s>&#x20b9; {{element.priceValues.basePrice}}</s>
+                                </p>  
+                            </ng-template>
+                            <ng-template class="price-box shadow-lg" #onlyBasePrice>
+                                <p style="font-size: small; border-radius: 5px; color: white; text-align: right;" >
+                                    <span class="bg-secondary" style="font-size: small; border-radius: 5px; color: white; text-align: right;">
+                                        &#x20b9; {{element.priceValues.basePrice}}
+                                    </span>
+                                </p>
+                            </ng-template>
+                        
+                        <ul *ngFor="let serviceElement of element.productServices" class="list-group shadow-lg" style="margin-bottom: 6px; padding-left: 7px;">
+                            <li *ngIf="serviceElement.isServiceSelected" class="list-group-item">
+                                <div class="container"
+                                    style="width: 25px; height: 25px; display: inline; background-color: white;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#1052AD"
+                                        class="w-5 h-5" width="20px" height="20px">
+                                        <path fill-rule="evenodd"
+                                            d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    <p class="service-price-box" style="display: inline;"> {{serviceElement.serviceName}} </p>
+                                    <span >
+                                        <div *ngIf="isOfferPricePresent(serviceElement.priceValues.offerPrice, element.priceValues.basePrice);then withServiceEntryOfferPrice else onlyServiceEntryBasePrice" class="service-price-box">
+                                        </div>   
+                                    </span>
+                                </div>
+                                <ng-template  #withServiceEntryOfferPrice>
+                                    &nbsp; &nbsp; &#x20b9; {{serviceElement.priceValues.offerPrice}} &nbsp; <s> &#x20b9; {{serviceElement.priceValues.basePrice}}</s>
+                                </ng-template>
+                                <ng-template class="price-box shadow-lg" #onlyServiceEntryBasePrice>
+                                    &nbsp; &nbsp; &#x20b9; {{serviceElement.priceValues.basePrice}} &nbsp;
+                                </ng-template>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="container" style="margin-top: 20px;">
+                    <h6 style="text-align: center;">Cost Summary</h6>
+                </div>
+                <div class="container order-summary">
+                    <div class="container shadow-lg line-total-box">
+                        <div class="row">
+                            <div class="container" style="width: 50%; background-color: white;">
+                                <h3 style="font-weight: bolder; padding-top: 20px;">Subtotal : </h3>
+                            </div>
+                            <div class="container" style="width: 40%; background-color: white;">
+                                <div *ngIf="isOfferPricePresent(basketDetails.basketCostSummary.lineSubTotalWithDiscount, basketDetails.basketCostSummary.lineSubTotalWithOutDiscount);then withOfferPrice else onlyBasePrice" class="service-price-box">
+                                </div>   
+                            </div>
+                            <ng-template  #withOfferPrice>
+                                <h4 style="text-align: right; padding-top: 15px"><b>&#x20b9; {{basketDetails.basketCostSummary.lineSubTotalWithDiscount}}</b></h4>
+                                <p style="text-align: right;"><s>&#x20b9; {{basketDetails.basketCostSummary.lineSubTotalWithOutDiscount}}</s></p>
+                            </ng-template>
+                            <ng-template class="price-box shadow-lg" #onlyBasePrice>
+                                <h4 style="text-align: right; padding-top: 15px"><b>&#x20b9; {{basketDetails.basketCostSummary.lineSubTotalWithOutDiscount}}</b></h4>
+                            </ng-template>
+                        </div>
+    
+                    </div>
+                    <div class="container shadow-lg service-total-box">
+                        <div class="row">
+                            <div class="container" style="width: 50%; background-color: white;">
+                                <h3 style="font-weight: bolder; padding-top: 20px;">Service Cost: </h3>
+                            </div>
+                            <div class="container" style="width: 40%; background-color: white;">
+                                <div *ngIf="isOfferPricePresent(basketDetails.basketCostSummary.serviceSubTotalWithDiscount, basketDetails.basketCostSummary.serviceSubTotalWithOutDiscount);then withServiceOfferPrice else onlyServiceBasePrice" class="service-price-box">
+                                </div>   
+                            </div>
+                            <ng-template  #withServiceOfferPrice>
+                                <h4 style="text-align: right; padding-top: 15px"><b>&#x20b9; {{basketDetails.basketCostSummary.serviceSubTotalWithDiscount}}</b></h4>
+                                <p style="text-align: right;"><s>&#x20b9; {{basketDetails.basketCostSummary.serviceSubTotalWithOutDiscount}}</s></p>
+                            </ng-template>
+                            <ng-template class="price-box shadow-lg" #onlyServiceBasePrice>
+                                <h4 style="text-align: right; padding-top: 15px"><b> &#x20b9; {{basketDetails.basketCostSummary.serviceSubTotalWithOutDiscount}}</b></h4>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="container shadow-lg order-total-box">
+                        <div class="row">
+                            <div class="container" style="width: 50%; background-color: white;">
+                                <h3 style="font-weight: bolder; padding-top: 20px;">Total : </h3>
+                            </div>
+                            <div class="container" style="width: 40%; background-color: white;">
+                                <div *ngIf="isOfferPricePresent(basketDetails.basketCostSummary.orderTotalWithDiscount, basketDetails.basketCostSummary.orderTotalWithOutDiscount);then withTotalOfferPrice else onlyTotalBasePrice" class="service-price-box">
+                                </div>   
+                            </div>
+                            <ng-template  #withTotalOfferPrice>
+                                <h4 style="text-align: right; padding-top: 15px"><b>&#x20b9; {{basketDetails.basketCostSummary.orderTotalWithDiscount}}</b></h4>
+                                <p style="text-align: right;"><s>&#x20b9; {{basketDetails.basketCostSummary.orderTotalWithOutDiscount}}</s></p>
+                            </ng-template>
+                            <ng-template class="price-box shadow-lg" #onlyTotalBasePrice>
+                                <h4 style="text-align: right; padding-top: 15px"><b> &#x20b9; {{basketDetails.basketCostSummary.orderTotalWithOutDiscount}}</b></h4>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="text-align: right; color: #D22D19;"> Savings : &#x20b9; {{basketDetails.basketCostSummary.cartSavings}}</h3>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

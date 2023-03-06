@@ -1,7 +1,4 @@
 
-const domain = "http://ec2-43-204-215-240.ap-south-1.compute.amazonaws.com:9001"
-//const domain = "http://localhost:9001"
-
 export class WelcomePageModel{
 	"isLoginEnabled" : boolean
 	"isGuestEnabled" : boolean
@@ -58,11 +55,10 @@ export class CreateAccountAction {
 }
 
 export class EndPointCollections{
-	welcomePageRequestUrl =  domain + "/api/v1/welcome/requestdetails"
-	//welcomePageRequestUrl = "https://eb94d8fb-4841-42be-82ec-2fbea4204936.mock.pstmn.io/welcomepage"
-  	guestUserActionEndPoint =  domain + "/api/v1/user/createguestuser"
-	createRegisteredUserEndPoint =  domain + "/api/v1/user/createregistereduser"
-	loginUserEndPoint =  domain + "/api/v1/user/reguserlogin"
+	welcomePageRequestUrl =  "/api/v1/welcome/requestdetails"
+  	guestUserActionEndPoint = "/api/v1/user/createguestuser"
+	createRegisteredUserEndPoint =  "/api/v1/user/createregistereduser"
+	loginUserEndPoint =  "/api/v1/user/reguserlogin"
 }
 
 export class AuthenticationResponseBody{

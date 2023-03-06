@@ -1,0 +1,244 @@
+<div class="order-confirmation-component">
+    <div class="container-fluid order-confirmation-note">
+        <h4><i> Your Order is Successfully Confirmed with us, Thanks for shopping !!!</i> </h4>
+        <h6>Order Number for reference <u><b>{{orderModel.OrderSummary[0].orderId}}</b></u></h6>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="container order-user-date-note">
+                    <p>Buyer Email id : {{orderModel.OrderSummary[0].emailId}}</p>
+                    <p style="margin-top: -15px;">Order Confirmed On : {{orderModel.OrderSummary[0].createdAt | date:'mediumDate'}}</p>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="container order-delivery-address-note bg-secondary">
+                    <p>Address Details for the order</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div *ngFor="let addressElement of orderModel.orderAddressDetails">
+                                <div *ngIf="isShippingAddress(addressElement.addressType)">
+                                    <p>Shipping Address</p>
+                                    <p>{{addressElement.companyName}}{{addressElement.line1}}, {{addressElement.line2}}
+                                    </p>
+                                    <p style="margin-top: -20px;">{{addressElement.city}}, {{addressElement.state}},
+                                        {{addressElement.pincode}},
+                                        {{addressElement.country}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div *ngFor="let addressElement of orderModel.orderAddressDetails">
+                                <div *ngIf="!isShippingAddress(addressElement.addressType)">
+                                    <p>Billing Address</p>
+                                    <p>{{addressElement.companyName}}{{addressElement.line1}}, {{addressElement.line2}}
+                                    </p>
+                                    <p style="margin-top: -20px;">{{addressElement.city}}, {{addressElement.state}},
+                                        {{addressElement.pincode}},
+                                        {{addressElement.country}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="container order-delivery-mode-note bg-secondary">
+                    <p>
+                        Choosen Delivery Type
+                    </p>
+                    <div *ngFor="let deliveryElement of orderModel.OrderEntries">
+                        <div *ngIf="isDeliveryEntry(deliveryElement.entryId)">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p>{{deliveryElement.codeShortDescription}}</p>
+                                </div>
+                                <div *ngIf="isOfferPricePresent(deliveryElement.payablePrice, deliveryElement.basePrice);
+                                 then withDeliveryOfferPrice else withoutDeliveryOfferPrice">
+                                </div>
+                                <ng-template #withDeliveryOfferPrice>
+                                    <div class="col-md-5">
+                                        <p style="text-align: left;">&#x20b9; {{deliveryElement.payablePrice}} &nbsp; <s>&#x20b9; {{deliveryElement.basePrice}} </s></p>
+                                    </div>
+                                </ng-template>
+                                <ng-template #withoutDeliveryOfferPrice>
+                                    <div class="col-md-5">
+                                        <p style="text-align: left;">&#x20b9; {{deliveryElement.basePrice}}</p>
+                                    </div>
+                                </ng-template>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8" style="margin-top: 40px;">
+                <h5>Products and Services Ordered</h5>
+                <div *ngFor="let productEntry of orderProductEntries; let imageIndex=index" class="container">
+                    <div class="row" style="margin-top: 30px; padding-bottom: 10px; border-bottom: 1px dotted black;">
+                        <div class="col-md-2">
+                            <div class="container product-image-container shadow-lg">
+                                <img src="{{imageUrls[imageIndex]}}" style="width: 100%; height: 100%; " alt="">
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="container shadow-lg product-box">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h5><b>{{productEntry.codeShortDescription}}</b></h5>
+                                        <p style="margin-top: -15px;">{{productEntry.productModelId}}</p>
+                                    </div>
+                                    <div *ngIf="isOfferPricePresent(productEntry.payablePrice, productEntry.basePrice);
+                                    then prodOfferPrice else prodBasePrice">
+                                    </div>
+                                    <ng-template #prodOfferPrice>
+                                        <div class="col-md-4">
+                                            <h5><b><s>&#x20b9; {{productEntry.basePrice}}</s> &nbsp; &#x20b9; {{productEntry.payablePrice}}</b></h5>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template #prodBasePrice>
+                                        <div class="col-md-4">
+                                            <h5><b>&#x20b9; {{productEntry.basePrice}}</b></h5>
+                                        </div>
+                                    </ng-template>
+                                    
+                                    <div class="col-md-2">
+                                        <h5><b>( X {{productEntry.quantity}})</b></h5>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h5><b>&#x20b9; {{productEntry.lineTotal}}</b></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngFor="let serviceEntry of orderServiceEntries">
+                                <div *ngIf="isServiceElementAssociatedToProduct(productEntry.entryId, serviceEntry.entryId)" class="container shadow-lg product-box">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5><b>{{serviceEntry.codeShortDescription}}</b></h5>
+                                        </div>
+                                        <div *ngIf="isOfferPricePresent(serviceEntry.payablePrice, serviceEntry.basePrice);
+                                        then prodServiceOfferPrice else prodServiceBasePrice">
+                                        </div>
+                                        <ng-template #prodServiceOfferPrice>
+                                            <div class="col-md-4">
+                                                <h5><b><s>&#x20b9; {{serviceEntry.basePrice}}</s> &nbsp; &#x20b9; {{serviceEntry.payablePrice}}</b></h5>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template #prodServiceBasePrice>
+                                            <div class="col-md-1">
+
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h5><b>&#x20b9; {{serviceEntry.payablePrice}}</b> </h5>
+                                            </div>
+                                        </ng-template>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top: 40px;">
+                <div class="container shadow-lg">
+                    <h5 style="text-align: center;">Cost Summary</h5>
+                </div>
+                <div class="container" style="margin-top: 40px; ">
+                    <div class="row" style="border-bottom: 2px dotted black;">
+                        <div class="col-md-6">
+                            <h5 style="color: green; font-weight: 800;">Savings made</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 style="text-align: right; padding-right: 35px; color: green; 
+                            font-weight: bold;"> &#x20b9; {{orderModel.OrderCostSummary[0].orderSavings}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-md-5">
+                            <h6><b>Product SubTotal</b></h6>
+                        </div>
+                        <div *ngIf="isOfferPricePresent(orderModel.OrderCostSummary[0].lineTotalWithDiscount, orderModel.OrderCostSummary[0].lineTotalWithoutDiscount);
+                        then withProdSubTotOfferPrice else withoutProdSubTotOfferPrice">
+                        </div>
+                        <ng-template #withProdSubTotOfferPrice>
+                            <div class="col-md-7">
+                                <h6 style="text-align: right; padding-right: 30px;"><b>&#x20b9; {{orderModel.OrderCostSummary[0].lineTotalWithDiscount}} &nbsp; 
+                                    <s>&#x20b9; {{orderModel.OrderCostSummary[0].lineTotalWithoutDiscount}}</s></b></h6>
+                            </div>
+                        </ng-template>
+                        <ng-template #withoutProdSubTotOfferPrice>
+                            <div class="col-md-7">
+                                <h6 style="text-align: right; padding-right: 30px;"><b>
+                                    &#x20b9; {{orderModel.OrderCostSummary[0].lineTotalWithoutDiscount}}</b></h6>
+                            </div>
+                        </ng-template> 
+                    </div>
+                    <div class="row" style="margin-top: 10px; border-bottom: 2px dotted black;">
+                        <div class="col-md-6">
+                            <h6><b>Service SubTotal</b></h6>
+                        </div>
+                        <div *ngIf="isOfferPricePresent(orderModel.OrderCostSummary[0].serviceTotalWithDiscount, orderModel.OrderCostSummary[0].serviceTotalWithoutDiscount);
+                        then withProdServTotOfferPrice else withProdServTotPrice">
+                        </div>
+                        <ng-template #withProdServTotOfferPrice>
+                            <div class="col-md-6">
+                               <h6 style="text-align: right; padding-right: 30px;"><b>&#x20b9; {{orderModel.OrderCostSummary[0].serviceTotalWithDiscount}} &nbsp; <s>&#x20b9;
+                                        {{orderModel.OrderCostSummary[0].serviceTotalWithoutDiscount}}</s></b></h6>
+                            </div> 
+                        </ng-template>
+                        <ng-template #withProdServTotPrice>
+                            <div class="col-md-6">
+                                <h6 style="text-align: right; padding-right: 30px;"><b>
+                                    &#x20b9; {{orderModel.OrderCostSummary[0].serviceTotalWithoutDiscount}}</b></h6>
+                             </div>
+                        </ng-template>    
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row" style="margin-top: 10px; border-bottom: 2px dotted black;">
+                        <div class="col-md-5">
+                            <h6><b>Total Quantity</b></h6>
+                        </div>
+                        <div class="col-md-7">
+                            <h6 style="text-align: right; padding-right: 30px;"><b>{{orderModel.OrderCostSummary[0].totalQuantity}}</b></h6>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-md-3">
+                            <h5><b>Total</b></h5>
+                        </div>
+                        <div *ngIf="isOfferPricePresent(orderModel.OrderCostSummary[0].orderTotalWithDiscount, orderModel.OrderCostSummary[0].orderTotalWithoutDiscount);
+                        then withOrderTotOfferPrice else withOutOrderTotOfferPrice">
+                        </div>
+                        <ng-template #withOrderTotOfferPrice>
+                            <div class="col-md-9">
+                                <h5 style="text-align: right; padding-right: 30px;"><b>&#x20b9; {{orderModel.OrderCostSummary[0].orderTotalWithDiscount}} <s>&#x20b9;
+                                    {{orderModel.OrderCostSummary[0].orderTotalWithoutDiscount}}</s></b></h5>
+                            </div>
+                        </ng-template>
+                        <ng-template #withOutOrderTotOfferPrice>
+                            <div class="col-md-9">
+                                <h5 style="text-align: right; padding-right: 30px;"><b>
+                                    &#x20b9; {{orderModel.OrderCostSummary[0].orderTotalWithoutDiscount}}</b></h5>
+                            </div>
+                        </ng-template>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <h6 style="text-align: center; margin-top: 25px;">For any clarifications related to orders reach us at</h6>
+        <h6 style="text-align: center; margin-top: -10px;">+91-xxxxxxxxxx,  orders@simpleCommerece.com</h6>
+        <p style="text-align: center; margin-bottom: 20px;"><a href="/" style="color: black;">Continue Shopping</a></p>
+    </div>
+</div>

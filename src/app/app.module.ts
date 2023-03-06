@@ -10,6 +10,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { Observable } from 'rxjs';
 import { UserBasketComponent } from './user-basket/user-basket.component';
 import { AddresspageComponent } from './addresspage/addresspage.component';
+import { DeliveryAndPaymentComponent } from './delivery-and-payment/delivery-and-payment.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
 
 @Injectable()
 export class CustomInterceptor implements HttpInterceptor { 
@@ -30,7 +32,9 @@ export class CustomInterceptor implements HttpInterceptor {
     WelcomeAndUserRegistrationComponent,
     ProductListingComponent,
     UserBasketComponent,
-    AddresspageComponent
+    AddresspageComponent,
+    DeliveryAndPaymentComponent,
+    OrderConfirmationComponent
   ],
   imports: [
     BrowserModule,

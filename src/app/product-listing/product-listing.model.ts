@@ -1,5 +1,3 @@
-const domain = "http://ec2-43-204-215-240.ap-south-1.compute.amazonaws.com:9001"
-//const domain = "http://localhost:9001"
 
 export class listingAttr{
     "sortTypes" : string[]
@@ -57,9 +55,9 @@ export class ProductAdditionResponse{
 }
 
 export class EndPointCollectionsProductListing{
-    productKeyConfigurationsEndPoint = domain + "/api/v1/products/getkeyconfigurations"
-    customProductListEndoint = domain + "/api/v1/products/list"
-    addProductToBasket = domain + "/api/v1/carts/addtobasket?productcode="
+    productKeyConfigurationsEndPoint = "/api/v1/products/getkeyconfigurations"
+    customProductListEndoint = "/api/v1/products/list"
+    addProductToBasket = "/api/v1/carts/addtobasket?productcode="
 }
 
 export class StockMessages{

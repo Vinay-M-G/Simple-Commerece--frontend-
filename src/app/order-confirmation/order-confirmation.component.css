@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Labrada&display=swap');
+
+.order-confirmation-component{
+    background-color:  #FFCD24;
+    padding-bottom: 25px;
+    font-family: 'Labrada', serif;
+}
+
+.order-confirmation-note{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.order-user-date-note{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom-right-radius: 60%;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: purple;
+    color: white;
+    border: 1.5px solid white;
+}
+
+.order-delivery-address-note{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 15px;
+    color: white;
+    border: 1.5px solid white;
+}
+
+.order-delivery-mode-note{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 15px;
+    color: white;
+    border: 1.5px solid white;
+}
+
+.product-image-container{
+    margin-left: 5px;
+    height: 125px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    border: 1px dotted black;
+}
+
+.product-box{
+    border-radius: 10px;
+}

@@ -1,7 +1,7 @@
 export class CookieHandler{
 
     addCookie(cookieKey : string , cookieValue : string){
-        document.cookie = cookieKey + "=" + cookieValue
+        document.cookie = cookieKey.trim() + "=" + cookieValue.trim()
     }
   
     removeCookie(cookieKey : string ){
@@ -14,8 +14,7 @@ export class CookieHandler{
         for(var i = 0; i < cookieList.length; i++){
 
            let cookieElement = cookieList[i].split("=");
-           if(cookieElement[0] == cookieId){
-
+           if(cookieElement[0].trim() == cookieId){
             cookieValue = cookieElement[1];
             break;
            } 
@@ -36,5 +35,6 @@ export class CookieHandler{
 }
 
 export class CookieVariables {
-    tempGuid = 'tempGuid' 
+    tempGuid = 'tempGuid'
+    orderId = 'orderId' 
 }
